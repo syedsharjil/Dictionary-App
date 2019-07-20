@@ -8,13 +8,27 @@ def meaning(w1):
     w1=w1.lower()
     if (w1 in data):
         return(data[w1])
+    
+    elif(w1.upper() in data):
+        return(data[w1.upper()]) 
+    
+    elif(len(get_close_matches(w1,data.keys()))>0):
+        print("Did you mean %s ?" %get_close_matches(w1,data.keys())[0])        
+        uinp=input("enter Y for yes N for no")
+        if(uinp=="Y"):
+            return(data[get_close_matches(w1,data.keys())[0]])
+        elif(uinp=="N"):
+            return("No such word exist")
+        else:
+            return("We didn't understand your query")
+    
     else:
-        seq=difflib.SequenceMatcher(None, w1,data.keys())
-        d=seq.ratio()
-        if(d>=0.8)
-            return((data.keys()[0)])
         return("word not found")
 
 w = input("Enter a word")
-print(meaning(w))
-Rain
+m=meaning(w)
+if(type(m)==list):
+    for item in m:
+        print(item)
+else:
+    print("No such word exist")
